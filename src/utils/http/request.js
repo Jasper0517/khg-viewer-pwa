@@ -4,7 +4,8 @@ import axios from 'axios'
  * create an axios instance
  */
 const service = axios.create({
-  timeout: 60000 // request timeout
+  timeout: 60000, // request timeout
+  withCredentials: true
 })
 
 /**
@@ -12,7 +13,7 @@ const service = axios.create({
  */
 service.interceptors.request.use(
   config => {
-    config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+    config.headers['Content-Type'] = 'application/json'
     return config
   },
   error => {

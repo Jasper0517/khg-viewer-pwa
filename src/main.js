@@ -2,9 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import VueAnalytics from 'vue-analytics'
 import i18n from './lang'
 import './plugins/element.js'
+import './permission'
 
 Vue.config.productionTip = false
 
@@ -23,19 +23,6 @@ Vue.config.productionTip = false
 //     }
 //   })
 // }
-
-const isProd = process.env.NODE_ENV === 'production'
-Vue.use(VueAnalytics, {
-  id: `'${process.env.VUE_APP_GA_ID}'`,
-  router,
-  debug: {
-    enabled: !isProd,
-    sendHitTask: isProd
-  },
-  autoTracking: {
-    pageviewOnLoad: false
-  }
-})
 
 new Vue({
   router,

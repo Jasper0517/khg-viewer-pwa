@@ -2,14 +2,18 @@
   <header>
     <h1>KHG</h1>
     <SwitchLanguage />
-    <el-link
-      v-if="isHome"
-      class="logout"
-      type="danger"
-      @click="logout"
-    >
-      {{ $t('home.logout') }}
-    </el-link>
+    <template v-if="isHome">
+      <el-link
+        class="logout"
+        type="danger"
+        @click="logout"
+      >
+        {{ $t('home.logout') }}
+      </el-link>
+      <router-link class="setting" to="/setting">
+        設定
+      </router-link>
+    </template>
     <span class="version">{{ `${$t('header.version')}${version}` }}</span>
   </header>
 </template>
@@ -18,8 +22,6 @@
 
 import SwitchLanguage from '@/components/SwitchLanguage'
 import { mapActions } from 'vuex'
-
-import Cookies from 'js-cookie'
 
 export default {
   name: 'Header',
@@ -33,19 +35,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
-      SetSetting: 'SetSetting'
+    ...mapActions('logout', {
+      Logout: 'Logout'
     }),
-    logout() {
-      Cookies.set('password', '')
-      Cookies.set('url', '')
-      Cookies.set('EDAP', '')
-      this.SetSetting({
-        url: '',
-        password: '',
-        EDAP: ''
-      })
-      this.$router.push('/setting')
+    async logout() {
+      try {
+        await this.Logout()
+        this.$router.push('/login')
+      } catch (error) {
+        console.error(error)
+        this.$router.push('/login')
+      }
     }
   }
 }
@@ -62,4 +62,11 @@ export default {
     top: 50%
     left: 0
     transform: translateY(-50%)
+  .setting
+    position: absolute
+    top: 50%
+    left: 70px
+    transform: translateY(-50%)
+    font-size: 14px
+    color: #4560d8
 </style>

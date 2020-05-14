@@ -64,7 +64,7 @@ export default {
   setting: {
     url: 'Url:',
     password: 'Password:',
-    login: 'Login',
+    send: 'Save',
     example: 'EX:',
     warning: {
       url: 'KHG External IP， Can\'t Use Private IP Address.',

@@ -27,4 +27,6 @@ export default {
   margin-top: 10px
   .el-card__header, .el-card__body
     padding: 5px
+  a
+    text-decoration: none
 </style>

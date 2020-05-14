@@ -1,7 +1,7 @@
 <template>
-  <section class="login">
-    <el-card class="login-card">
-      <el-form ref="loginForm" :model="ruleForm" :rules="rules" label-position="left" label-width="115px">
+  <section class="setting">
+    <el-card class="setting-card">
+      <el-form ref="settingForm" :model="ruleForm" :rules="rules" label-position="left" label-width="115px">
         <div class="warning">{{ $t('setting.warning.url') }}</div>
         <div class="example">{{ $t('setting.example') }} http://123.123.123.123:8090/</div>
         <el-form-item required :label="$t('setting.url')" prop="url">
@@ -9,25 +9,22 @@
         </el-form-item>
         <div class="warning">{{ $t('setting.warning.password') }}</div>
         <el-form-item required :label="$t('setting.password')" prop="password">
-          <el-input v-model="password" show-password type="password" />
+          <el-input v-model="KHGPassword" show-password type="password" />
         </el-form-item>
         <div class="warning">{{ $t('setting.warning.EDAP') }}</div>
         <el-form-item label="E.D.A.P Key：">
-          <el-input v-model="EDAP" />
-        </el-form-item>
-        <el-form-item size="large">
-          <el-button type="primary" @click="login">
-            {{ $t('setting.login') }}
-          </el-button>
+          <el-input v-model="EDAPKey" />
         </el-form-item>
       </el-form>
+      <el-button type="primary" @click="setting">
+        {{ $t('setting.send') }}
+      </el-button>
     </el-card>
   </section>
 </template>
 
 <script>
-import Cookies from 'js-cookie'
-import { mapActions, mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Setting',
@@ -40,7 +37,9 @@ export default {
       }
     }
     return {
-      showUrl: '',
+      KHGPassword: '',
+      url: '',
+      EDAPKey: '',
       rules: {
         url: [
           { required: true, message: this.$t('setting.validatorMessage.url.required'), trigger: 'blur' },
@@ -54,33 +53,8 @@ export default {
   },
   computed: {
     ...mapState({
-      setting: state => state.setting
+      user: state => state.login.user
     }),
-    password: {
-      get() {
-        return this.setting.password
-      },
-      set(val) {
-        this.SetPassword(val)
-      }
-    },
-    url: {
-      get() {
-        return this.showUrl
-      },
-      set(val) {
-        this.showUrl = val
-        this.SetUrl(val)
-      }
-    },
-    EDAP: {
-      get() {
-        return this.setting.EDAP
-      },
-      set(val) {
-        this.SetEDAP(val)
-      }
-    },
     ruleForm() {
       return {
         url: this.showUrl,
@@ -89,32 +63,30 @@ export default {
     }
   },
   created() {
-    const password = Cookies.get('password')
-    const EDAP = Cookies.get('EDAP')
-    const url = Cookies.get('url')
-
-    this.SetPassword(password)
-    this.SetUrl(url)
-    this.SetEDAP(EDAP)
+    this.KHGPassword = this.user.KHGPassword
+    this.url = this.user.url
+    this.EDAPKey = this.user.EDAPKey
   },
   methods: {
-    ...mapActions({
-      SetPassword: 'SetPassword',
-      SetUrl: 'SetUrl',
-      SetEDAP: 'SetEDAP',
-      SetLanguage: 'SetLanguage'
+    ...mapActions('setting', {
+      Setting: 'Setting'
     }),
-    login() {
-      this.$refs.loginForm.validate(valid => {
+    setting() {
+      this.$refs.settingForm.validate(async valid => {
         if (!valid) {
           console.error('error submit!!')
           return
         } else {
-          Cookies.set('password', this.setting.password, { expires: 365 })
-          Cookies.set('url', this.setting.url, { expires: 365 })
-          Cookies.set('EDAP', this.setting.EDAP, { expires: 365 })
-          this.$router.push('/')
-          // this.showUrl = ''
+          try {
+            await this.Setting({
+              KHGPassword: this.KHGPassword,
+              url: this.url,
+              EDAPKey: this.EDAPKey
+            })
+            this.$router.push('/')
+          } catch (error) {
+            this.$router.push('/login')
+          }
         }
       })
     }
@@ -123,12 +95,12 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .login
+  .setting
     display: flex
     justify-content: center
     align-items: center
     position: relative
-  .login-card
+  .setting-card
     padding: 15px
     width: 100%
     max-width: 500px

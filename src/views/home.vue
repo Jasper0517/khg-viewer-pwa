@@ -18,9 +18,7 @@ import SystemInfo from '@/components/SystemInfo'
 import FunctionButtons from '@/components/FunctionButtons'
 
 import { mapActions, mapState } from 'vuex'
-import Cookies from 'js-cookie'
 import moment from 'moment'
-import qs from 'qs'
 
 export default {
   name: 'Home',
@@ -51,37 +49,37 @@ export default {
     })
   },
   created() {
-    const password = Cookies.get('password')
-    const EDAP = Cookies.get('EDAP')
-    const url = Cookies.get('url')
+    // const password = Cookies.get('password')
+    // const EDAP = Cookies.get('EDAP')
+    // const url = Cookies.get('url')
 
-    this.SetPassword(password)
-    this.SetUrl(url)
-    this.SetEDAP(EDAP)
+    // this.SetPassword(password)
+    // this.SetUrl(url)
+    // this.SetEDAP(EDAP)
 
-    if (!this.setting.password || !this.setting.url) {
-      this.$router.push('/setting')
-      return
-    }
+    // if (!this.setting.password || !this.setting.url) {
+    //   this.$router.push('/setting')
+    //   return
+    // }
 
-    this.SetLoading(true)
+    // this.SetLoading(true)
 
-    const loginData = qs.stringify({ password: this.setting.password, button: 'Login' })
-    this.Login(loginData).then(async() => {
-      await new Promise(resolve => { setTimeout(() => resolve(), 4000) })
-      const EDACData = qs.stringify({ EAPK: this.setting.EDAP })
-      await this.GetEDAC(EDACData)
-      this.EDACPaser()
-      await new Promise(resolve => { setTimeout(() => resolve(), 4000) })
-      await this.GetKHRecord()
-      this.logParser()
-      this.SetLoading(false)
-    }).catch(
-      error => {
-        this.SetLoading(false)
-        throw error
-      }
-    )
+    // const loginData = qs.stringify({ password: this.setting.password, button: 'Login' })
+    // this.Login(loginData).then(async() => {
+    //   await new Promise(resolve => { setTimeout(() => resolve(), 4000) })
+    //   const EDACData = qs.stringify({ EAPK: this.setting.EDAP })
+    //   await this.GetEDAC(EDACData)
+    //   this.EDACPaser()
+    //   await new Promise(resolve => { setTimeout(() => resolve(), 4000) })
+    //   await this.GetKHRecord()
+    //   this.logParser()
+    //   this.SetLoading(false)
+    // }).catch(
+    //   error => {
+    //     this.SetLoading(false)
+    //     throw error
+    //   }
+    // )
   },
   methods: {
     ...mapActions({

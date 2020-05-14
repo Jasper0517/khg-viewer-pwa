@@ -1,11 +1,8 @@
 import request from '@/utils/http'
 
-export function login({
-  baseUrl,
-  data
-}) {
+export function login(data) {
   return request({
-    url: `${baseUrl}/Login`,
+    url: 'http://127.0.0.1:3000/login',
     method: 'POST',
     data
   })

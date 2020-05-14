@@ -64,7 +64,7 @@ export default {
   setting: {
     url: '對外網址：',
     password: '密碼：',
-    login: '登入',
+    send: '儲存',
     example: '如：',
     warning: {
       url: 'KHG對外網址，無法使用家裡內網IP',
@@ -78,6 +78,38 @@ export default {
       },
       password: {
         required: '請輸入密碼'
+      }
+    }
+  },
+  login: {
+    password: '密碼',
+    login: '登入',
+    validatorMessage: {
+      email: {
+        required: '請輸入E-mail',
+        format: 'E-mail格式錯誤'
+      },
+      password: {
+        required: '請輸入密碼'
+      }
+    }
+  },
+  signup: {
+    password: '密碼',
+    confirmPassword: '重複密碼',
+    signup: '註冊',
+    validatorMessage: {
+      email: {
+        required: '請輸入E-mail',
+        format: 'E-mail格式錯誤'
+      },
+      password: {
+        required: '請輸入密碼',
+        notEqual: '兩次密碼不相同'
+      },
+      confirmPassword: {
+        required: '請再次輸入密碼',
+        notEqual: '兩次密碼不相同'
       }
     }
   }

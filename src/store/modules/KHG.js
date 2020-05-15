@@ -1,19 +1,17 @@
-import cheerio from 'cheerio'
 import cookies from 'js-cookie'
 
 import {
-  login,
-  EDACApi,
+  KHGLogin,
+  EDAC,
   getKHRecord,
   normalApiControl
-} from '@/api'
+} from '@/api/KHG'
 
 export default {
   namespaced: true,
   state: {
     record: {
       KHLog: [],
-      originLog: [],
       EDAC: ''
     },
     setting: {
@@ -58,45 +56,20 @@ export default {
     }
   },
   actions: {
-    async Login({ state }, data) {
-      const payload = {
-        data,
-        baseUrl: state.setting.url
-      }
-      await login(payload).catch(err => { throw err })
+    async KHGLogin({ commit }, data) {
+      await KHGLogin(data).catch(err => { throw err })
     },
     async EDAC({ commit, state }, data) {
-      if (!state.setting.EDAP) return false
-      const payload = {
-        data,
-        baseUrl: state.setting.url
-      }
-      const apiData = await EDACApi(payload).catch(err => { throw err })
-      const $ = cheerio.load(apiData)
-      const tbody = $('body')
-      commit('SET_EDAC', tbody.text())
+      if (!data.EAPK) return false
+      const apiData = await EDAC(data).catch(err => { throw err })
+      commit('SET_EDAC', apiData.data)
     },
-    async GetKHRecord({ commit, state }) {
-      const payload = {
-        baseUrl: state.setting.url
-      }
-      const unformatData = []
-      const data = await getKHRecord(payload)
-      const $ = cheerio.load(data)
-      const tbody = $('tbody')
-      const table_td = tbody.eq(0).find('td')
-      for (let i = 0; i < table_td.length - 1; i++) {
-        unformatData.push(table_td.eq(i).text())
-      }
-      commit('SET_ORIGIN_DATA', unformatData.map(item => { return { item } }).reverse())
+    async GetKHRecord({ commit, state }, data) {
+      const apiData = await getKHRecord(data)
+      commit('SET_KH_LOG', apiData.data)
     },
     async NormalApiControl({ commit, state }, data) {
-      const payload = {
-        data,
-        baseUrl: state.setting.url
-      }
-      const apiData = await normalApiControl(payload).catch(err => { throw err })
-      commit('SET_TEMP_DATA', apiData)
+      await normalApiControl(data).catch(err => { throw err })
     },
     SetKHLog({ commit }, log) {
       commit('SET_KH_LOG', log)

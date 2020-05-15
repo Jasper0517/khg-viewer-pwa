@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     ...mapState({
-      KHLog: state => state.record.KHLog
+      KHLog: state => state.KHG.record.KHLog
     }),
     KHData() {
       return this.KHLog.filter(log => log.isKHRecord)

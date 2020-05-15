@@ -25,16 +25,14 @@
 
 <script>
 import moment from 'moment'
+import { mapState } from 'vuex'
 
 export default {
   name: 'SystemInfo',
-  props: {
-    formatedData: {
-      type: Object,
-      default: () => {}
-    }
-  },
   computed: {
+    ...mapState({
+      formatedData: state => state.KHG.record.EDAC
+    }),
     resetTime() {
       return moment().add(this.formatedData.nextTime, 'minutes').format('MM/DD HH:mm:ss')
     }

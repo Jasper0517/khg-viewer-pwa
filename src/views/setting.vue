@@ -8,12 +8,19 @@
           <el-input v-model="url" />
         </el-form-item>
         <div class="warning">{{ $t('setting.warning.password') }}</div>
-        <el-form-item required :label="$t('setting.password')" prop="password">
-          <el-input v-model="KHGPassword" show-password type="password" />
+        <el-form-item required :label="$t('setting.password')" prop="KHGPassword">
+          <el-input v-model="KHGPassword" type="password" />
         </el-form-item>
         <div class="warning">{{ $t('setting.warning.EDAP') }}</div>
         <el-form-item label="E.D.A.P Key：">
-          <el-input v-model="EDAPKey" />
+          <el-input v-model="EDAPKey" required prop="EDAPKey" />
+        </el-form-item>
+        <el-form-item label="Telegram通知">
+          <el-switch
+            v-model="isNotification"
+            active-color="#13ce66"
+            inactive-color="#DCDFE6"
+          />
         </el-form-item>
       </el-form>
       <el-button type="primary" @click="setting">
@@ -40,12 +47,16 @@ export default {
       KHGPassword: '',
       url: '',
       EDAPKey: '',
+      isNotification: false,
       rules: {
         url: [
           { required: true, message: this.$t('setting.validatorMessage.url.required'), trigger: 'blur' },
           { validator: validHttpString, trigger: 'blur' }
         ],
-        password: [
+        KHGPassword: [
+          { required: true, message: this.$t('setting.validatorMessage.password.required'), trigger: 'blur' }
+        ],
+        EDAPKey: [
           { required: true, message: this.$t('setting.validatorMessage.password.required'), trigger: 'blur' }
         ]
       }
@@ -57,8 +68,9 @@ export default {
     }),
     ruleForm() {
       return {
-        url: this.showUrl,
-        password: this.password
+        url: this.url,
+        KHGPassword: this.KHGPassword,
+        EDAPKey: this.EDAPKey
       }
     }
   },
@@ -66,6 +78,7 @@ export default {
     this.KHGPassword = this.user.KHGPassword
     this.url = this.user.url
     this.EDAPKey = this.user.EDAPKey
+    this.isNotification = this.user.notification
   },
   methods: {
     ...mapActions('setting', {
@@ -81,7 +94,9 @@ export default {
             await this.Setting({
               KHGPassword: this.KHGPassword,
               url: this.url,
-              EDAPKey: this.EDAPKey
+              EDAPKey: this.EDAPKey,
+              email: this.user.email,
+              notification: this.isNotification
             })
             this.$router.push('/')
           } catch (error) {

@@ -35,11 +35,12 @@ export default {
   },
   computed: {
     ...mapState({
-      tempData: state => state.tempData
+      tempData: state => state.KHG.tempData,
+      user: state => state.login.user
     })
   },
   methods: {
-    ...mapActions({
+    ...mapActions('KHG', {
       NormalApiControl: 'NormalApiControl'
     }),
     async controlEngMode() {
@@ -60,8 +61,11 @@ export default {
       console.log(inputs.attr('style'))
     },
     getKH() {
-      const engData = qs.stringify({ 'ACT_NAME': 'Get dKH' })
-      this.NormalApiControl(engData).then(() => {
+      const data = {
+        url: this.user.url,
+        actName: 'Get dKH'
+      }
+      this.NormalApiControl(data).then(() => {
         this.$message({
           message: this.$t('home.functionButtons.tips.getdKH.success'),
           type: 'success'

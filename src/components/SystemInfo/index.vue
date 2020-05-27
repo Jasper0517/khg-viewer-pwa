@@ -1,5 +1,6 @@
 <template>
   <section class="system-info">
+    <span class="version">{{ `${$t('header.version')}${version}` }}</span>
     <el-card class="system-info-card">
       <div slot="header" class="clearfix">
         <span>{{ $t('home.systemInfo.title') }}</span>
@@ -35,6 +36,9 @@ export default {
     }),
     resetTime() {
       return moment().add(this.formatedData.nextTime, 'minutes').format('MM/DD HH:mm:ss')
+    },
+    version() {
+      return require('../../../package.json').version
     }
   }
 }

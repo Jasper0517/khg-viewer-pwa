@@ -3,6 +3,10 @@ import store from './store'
 
 router.beforeEach(async(to, from, next) => {
   if (!store.state.login.isLogin) {
+    if (to.path === '/login' || to.path === '/signup') {
+      next()
+      return
+    }
     try {
       await store.dispatch('login/Login')
       if (!store.state.login.user.isSetting) {

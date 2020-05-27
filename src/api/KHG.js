@@ -2,7 +2,7 @@ import request from '@/utils/http'
 
 export function KHGLogin(data) {
   return request({
-    url: 'http://localhost:3000/KHGLogin',
+    url: '/KHGLogin',
     method: 'POST',
     data
   })
@@ -10,7 +10,7 @@ export function KHGLogin(data) {
 
 export function EDAC(data) {
   return request({
-    url: 'http://localhost:3000/EDAC',
+    url: '/EDAC',
     method: 'POST',
     data
   })
@@ -18,7 +18,7 @@ export function EDAC(data) {
 
 export function getKHRecord(data) {
   return request({
-    url: 'http://localhost:3000/getKHRecord',
+    url: '/getKHRecord',
     method: 'POST',
     data
   })
@@ -26,7 +26,7 @@ export function getKHRecord(data) {
 
 export function normalApiControl(data) {
   return request({
-    url: 'http://localhost:3000/normalApiControl',
+    url: '/normalApiControl',
     method: 'POST',
     data
   })

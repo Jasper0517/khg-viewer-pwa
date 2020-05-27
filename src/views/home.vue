@@ -48,23 +48,6 @@ export default {
   },
   created() {
     this.getApi()
-
-    // const loginData = qs.stringify({ password: this.setting.password, button: 'Login' })
-    // this.Login(loginData).then(async() => {
-    //   await new Promise(resolve => { setTimeout(() => resolve(), 4000) })
-    //   const EDACData = qs.stringify({ EAPK: this.setting.EDAP })
-    //   await this.GetEDAC(EDACData)
-    //   this.EDACPaser()
-    //   await new Promise(resolve => { setTimeout(() => resolve(), 4000) })
-    //   await this.GetKHRecord()
-    //   this.logParser()
-    //   this.SetLoading(false)
-    // }).catch(
-    //   error => {
-    //     this.SetLoading(false)
-    //     throw error
-    //   }
-    // )
   },
   methods: {
     ...mapActions('KHG', {

@@ -2,7 +2,7 @@
   <section class="language">
     <el-radio-group v-model="language" size="mini">
       <el-radio-button label="中文" />
-      <el-radio-button label="En" />
+      <el-radio-button label="EN" />
     </el-radio-group>
   </section>
 </template>

@@ -98,6 +98,9 @@ export default {
               email: this.user.email,
               notification: this.isNotification
             })
+            this.$message.success({
+              message: '設定成功'
+            })
             this.$router.push('/')
           } catch (error) {
             this.$router.push('/login')

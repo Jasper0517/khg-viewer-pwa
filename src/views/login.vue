@@ -28,7 +28,7 @@ import emailRegex from 'email-regex'
 export default {
   name: 'Login',
   data() {
-    const validHttpString = (rule, value, callback) => {
+    const validEmailString = (rule, value, callback) => {
       if (emailRegex({ exact: true }).test(value)) {
         callback()
       } else {
@@ -39,9 +39,9 @@ export default {
       email: '',
       password: '',
       rules: {
-        url: [
+        email: [
           { required: true, message: this.$t('login.validatorMessage.email.required'), trigger: 'blur' },
-          { validator: validHttpString, trigger: 'blur' }
+          { validator: validEmailString, trigger: 'blur' }
         ],
         password: [
           { required: true, message: this.$t('login.validatorMessage.password.required'), trigger: 'blur' }
@@ -77,6 +77,9 @@ export default {
             await this.Login({
               email: this.email,
               password: this.password
+            })
+            this.$message.success({
+              message: '登入成功'
             })
             if (!this.user.isSetting) {
               this.$router.push('/setting')

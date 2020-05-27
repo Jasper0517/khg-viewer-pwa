@@ -2,7 +2,7 @@
   <header>
     <h1>KHG</h1>
     <SwitchLanguage />
-    <template v-if="isHome">
+    <template v-if="!isLoginPage">
       <el-link
         class="logout"
         type="danger"
@@ -14,7 +14,6 @@
         設定
       </router-link>
     </template>
-    <span class="version">{{ `${$t('header.version')}${version}` }}</span>
   </header>
 </template>
 
@@ -27,11 +26,8 @@ export default {
   name: 'Header',
   components: { SwitchLanguage },
   computed: {
-    isHome() {
-      return this.$route.path === '/'
-    },
-    version() {
-      return require('../../package.json').version
+    isLoginPage() {
+      return this.$route.path === '/login' || this.$route.path === '/signup'
     }
   },
   methods: {
@@ -41,9 +37,9 @@ export default {
     async logout() {
       try {
         await this.Logout()
-        this.$router.push('/login')
       } catch (error) {
         console.error(error)
+      } finally {
         this.$router.push('/login')
       }
     }
@@ -57,6 +53,7 @@ export default {
     margin-bottom: 15px
   h1
     color: #4560d8
+    margin: 0
   .logout
     position: absolute
     top: 50%

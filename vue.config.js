@@ -1,4 +1,5 @@
 module.exports = {
+  publicPath: './',
   pages: {
     'index': {
       // page 的入口
@@ -8,7 +9,6 @@ module.exports = {
       title: 'KHG Viewer'
     }
   },
-
   pluginOptions: {
     i18n: {
       locale: 'zh-tw',

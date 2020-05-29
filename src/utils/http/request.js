@@ -8,7 +8,7 @@ import cookie from 'js-cookie'
 const service = axios.create({
   timeout: 60000, // request timeout
   withCredentials: true,
-  baseURL: 'http://45.77.28.169:3000/'
+  baseURL: process.env.VUE_APP_BASE_URL
 })
 
 /**
@@ -17,7 +17,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     config.headers['Content-Type'] = 'application/json'
-    config.headers.common['language'] = cookie.get('language')
+    config.headers.common.language = cookie.get('language')
     return config
   },
   error => {

@@ -5,6 +5,7 @@ export default {
   },
   home: {
     logout: '登出系統',
+    Refresh: '重新整理',
     chart: {
       today: '今日',
       yesterday: '昨日',

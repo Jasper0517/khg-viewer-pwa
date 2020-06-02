@@ -5,6 +5,7 @@ export default {
   },
   home: {
     logout: 'Logout',
+    Refresh: 'Refresh',
     chart: {
       today: 'Today',
       yesterday: 'Yesterday',

@@ -13,6 +13,10 @@
       <router-link class="setting" to="/setting">
         設定
       </router-link>
+      <el-link type="success" @click="refresh">
+        {{ $t('home.Refresh') }}
+        <i class="el-icon-refresh" />
+      </el-link>
     </template>
   </header>
 </template>
@@ -42,6 +46,9 @@ export default {
       } finally {
         this.$router.push('/login')
       }
+    },
+    refresh() {
+      this.$router.go(0)
     }
   }
 }

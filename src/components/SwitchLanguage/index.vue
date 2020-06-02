@@ -21,7 +21,7 @@ export default {
     language: {
       get() {
         if (!this.currentLang) return '中文'
-        return this.currentLang === 'zh-tw' ? '中文' : 'En'
+        return this.currentLang === 'zh-tw' ? '中文' : 'EN'
       },
       set(val) {
         const lang = val === '中文' ? 'zh-tw' : 'en'

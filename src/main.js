@@ -5,6 +5,7 @@ import store from './store'
 import i18n from './lang'
 import './plugins/element.js'
 import './permission'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 

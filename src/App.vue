@@ -1,6 +1,8 @@
 <template>
   <div
     id="app"
+    v-loading.fullscreen.lock="isLoading"
+    :element-loading-text="$t('loading')"
   >
     <Header />
     <router-view />
@@ -13,7 +15,12 @@ import Header from '@/views/header'
 
 export default {
   name: 'KHG',
-  components: { Header }
+  components: { Header },
+  computed: {
+    isLoading() {
+      return this.$store.state.app.isLoading
+    }
+  }
 }
 </script>
 

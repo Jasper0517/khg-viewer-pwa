@@ -12,6 +12,7 @@
           <el-input v-model="confirmPassword" show-password type="password" />
         </el-form-item>
         <el-form-item class="signup-button" size="large">
+          <VueRecaptcha ref="recaptcha" :sitekey="recaptchaKey" size="invisible" @verify="onVerify" />
           <el-button type="primary" @click="signup">
             {{ $t('signup.signup') }}
           </el-button>
@@ -24,15 +25,24 @@
 <script>
 import { mapActions, mapState, mapGetters } from 'vuex'
 import emailRegex from 'email-regex'
+import VueRecaptcha from 'vue-recaptcha'
 
 export default {
   name: 'Signup',
+  components: { VueRecaptcha },
   data() {
     const validEmailString = (rule, value, callback) => {
       if (emailRegex({ exact: true }).test(value)) {
         callback()
       } else {
         callback(new Error(this.$t('login.validatorMessage.email.format')))
+      }
+    }
+    const validConfirmPassword = (rule, value, callback) => {
+      if (value !== this.confirmPassword) {
+        callback(new Error(this.$t('signup.validatorMessage.confirmPassword.notEqual')))
+      } else {
+        callback()
       }
     }
     return {
@@ -48,15 +58,17 @@ export default {
           { required: true, message: this.$t('signup.validatorMessage.password.required'), trigger: 'blur' }
         ],
         confirmPassword: [
-          { required: true, message: this.$t('signup.validatorMessage.confirmPassword.required'), trigger: 'blur' }
+          { required: true, message: this.$t('signup.validatorMessage.confirmPassword.required'), trigger: 'blur' },
+          { validator: validConfirmPassword, trigger: 'blur' }
         ]
       }
     }
   },
   computed: {
-    ...mapGetters(['isLogin']),
+    ...mapGetters(['isLogin', 'recaptchaKey']),
     ...mapState({
-      user: state => state.login.user
+      user: state => state.login.user,
+      isHuman: state => state.login.isHuman
     }),
     ruleForm() {
       return {
@@ -78,14 +90,25 @@ export default {
           console.error('error submit!!')
           return
         } else {
-          await this.Signup({
-            email: this.email,
-            password: this.password,
-            confirmPassword: this.confirmPassword
-          })
-          this.$router.push('/login')
+          if (this.isHuman) {
+            await this.signupApi()
+          } else {
+            this.$refs.recaptcha.execute()
+          }
         }
       })
+    },
+    async onVerify(response) {
+      await this.VerifyRecaptcha(response)
+      if (this.isHuman) await this.signupApi()
+    },
+    async signupApi() {
+      await this.Signup({
+        email: this.email,
+        password: this.password,
+        confirmPassword: this.confirmPassword
+      })
+      this.$router.push('/login')
     }
   }
 }

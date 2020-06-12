@@ -1,5 +1,7 @@
 import {
-  login
+  login,
+  verifyRecaptcha,
+  forgetPassword
 } from '@/api/login.js'
 
 import crypto from 'crypto-js'
@@ -16,7 +18,8 @@ export default {
       notification: false,
       isSetting: false
     },
-    isLogin: false
+    isLogin: false,
+    isHuman: false
   },
   mutations: {
     SET_USER(state, user) {
@@ -31,12 +34,22 @@ export default {
         KHGPassword: ecryptPassword(user.KHGPassword)
       }
       state.isLogin = true
+    },
+    SET_ISHUMAN(state, isHuman) {
+      state.isHuman = isHuman
     }
   },
   actions: {
     async Login({ commit }, user) {
       const { data } = await login(user)
       commit('SET_USER', data)
+    },
+    async VerifyRecaptcha({ commit }, response) {
+      const { data } = await verifyRecaptcha(response)
+      commit('SET_ISHUMAN', data)
+    },
+    async ForgetPassword({ commit }, email) {
+      await forgetPassword(email)
     }
   }
 }

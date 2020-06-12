@@ -1,11 +1,12 @@
 export default {
   loading: 'Loading',
   header: {
-    version: 'Version:'
+    version: 'Version:',
+    setting: 'Setting',
+    logout: 'Logout',
+    Refresh: 'Refresh'
   },
   home: {
-    logout: 'Logout',
-    Refresh: 'Refresh',
     chart: {
       today: 'Today',
       yesterday: 'Yesterday',
@@ -64,54 +65,85 @@ export default {
   },
   setting: {
     url: 'Url:',
-    password: 'Password:',
+    oldPassword: 'Password:',
+    newPassword: 'New Password:',
+    confirmNewPassword: 'Confirm New Password:',
+    KHGPassword: 'KHG Password:',
     send: 'Save',
+    confirm: 'Confirm',
+    cancel: 'Cancel',
     example: 'EX:',
+    telegramNotification: 'Telegram Notification',
+    language: 'Language',
+    changePassword: 'Cahnge Password',
+    success: {
+      set: 'Setting Successful',
+      change: 'Change Password Successful'
+    },
     warning: {
       url: 'KHG External IP， Can\'t Use Private IP Address.',
-      password: 'KHG Login Password, Default Is "Admin".',
-      EDAP: 'You Need Open Engine Mode To Check Your Key, It IS Optional.'
+      password: 'KHG Password, Default Is "Admin".',
+      EDAP: 'You Need Open Engine Mode To Check Your "E.D.A.P Key", Default Is "Dr. Bridge".'
     },
     validatorMessage: {
       url: {
         format: 'Please Follow The Right Format',
         required: 'Url Is Required'
       },
-      password: {
+      KHGPassword: {
+        required: 'KHG Password Is Require'
+      },
+      oldPassword: {
         required: 'Password Is Required'
+      },
+      newPassword: {
+        required: 'Password Is Required'
+      },
+      confirmNewPassword: {
+        required: 'Password Is Required',
+        confirm: 'Those passwords didn\'t match'
       }
+    },
+    dialog: {
+      title: 'Change Password'
     }
   },
   login: {
-    password: '密碼',
-    login: '登入',
+    password: 'Password',
+    login: 'Login',
+    signup: 'Sign Up',
+    forgetPassword: 'Forget Password',
+    success: 'Login Successful',
     validatorMessage: {
       email: {
-        required: '請輸入E-mail',
-        format: 'E-mail格式錯誤'
+        required: 'E-mail is required',
+        format: 'E-mail format is error'
       },
       password: {
-        required: '請輸入密碼'
+        required: 'Password is required'
       }
     }
   },
   signup: {
-    password: '密碼',
-    confirmPassword: '重複密碼',
-    signup: '註冊',
+    password: 'Password',
+    confirmPassword: 'Confirmed Password',
+    signup: 'Sign Up',
     validatorMessage: {
       email: {
-        required: '請輸入E-mail',
-        format: 'E-mail格式錯誤'
+        required: 'E-mail is required',
+        format: 'E-mail format is error'
       },
       password: {
-        required: '請輸入密碼',
-        notEqual: '兩次密碼不相同'
+        required: 'Password is required'
       },
       confirmPassword: {
-        required: '請再次輸入密碼',
-        notEqual: '兩次密碼不相同'
+        required: 'Confirm Password is required',
+        notEqual: 'Those passwords didn\'t match'
       }
     }
+  },
+  forgetPassword: {
+    send: 'Send E-mail',
+    success: 'Send Email Successful, please login with the new password'
   }
 }

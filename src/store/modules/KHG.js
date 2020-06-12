@@ -19,7 +19,6 @@ export default {
       password: '',
       EDAP: ''
     },
-    isLoading: false,
     language: 'zh-tw',
     tempData: ''
   },

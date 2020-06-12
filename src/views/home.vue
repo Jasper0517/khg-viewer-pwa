@@ -1,9 +1,5 @@
 <template>
-  <section
-    v-loading.fullscreen.lock="isLoading"
-    class="home"
-    :element-loading-text="$t('loading')"
-  >
+  <section class="home">
     <SystemInfo :formated-data="formatedEDAC" />
     <FunctionButtons />
     <Chart />
@@ -47,13 +43,16 @@ export default {
     })
   },
   created() {
-    this.getApi()
+    if (process.env.NODE_ENV === 'production') this.getApi()
   },
   methods: {
     ...mapActions('KHG', {
       KHGLogin: 'KHGLogin',
       EDAC: 'EDAC',
       GetKHRecord: 'GetKHRecord',
+      SetLoading: 'SetLoading'
+    }),
+    ...mapActions('app', {
       SetLoading: 'SetLoading'
     }),
     async getApi() {

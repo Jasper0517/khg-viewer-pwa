@@ -1,5 +1,6 @@
 import {
-  setting
+  setting,
+  changePassword
 } from '@/api/setting.js'
 
 export default {
@@ -12,6 +13,9 @@ export default {
   actions: {
     async Setting({ commit }, user) {
       await setting(user)
+    },
+    async ChangePassword({ commit }, data) {
+      await changePassword(data)
     }
   }
 }

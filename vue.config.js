@@ -16,5 +16,11 @@ module.exports = {
       localeDir: 'locales',
       enableInSFC: false
     }
+  },
+  pwa: {
+    Default: '#FFFFFF',
+    msTileColor: '#FFFFFF',
+    backgroundColor: '#FFFFFF',
+    themeColor: '#FFFFFF'
   }
 }

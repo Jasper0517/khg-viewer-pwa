@@ -47,6 +47,7 @@ export default {
       const engData = qs.stringify({ 'ACT_NAME': 'ENG Mode ON' })
       await this.NormalApiControl(engData).then(() => {
         this.$message({
+          showClose: true,
           message: this.$t('home.functionButtons.tips.getdKH.success'),
           type: 'success'
         })
@@ -67,6 +68,7 @@ export default {
       }
       this.NormalApiControl(data).then(() => {
         this.$message({
+          showClose: true,
           message: this.$t('home.functionButtons.tips.getdKH.success'),
           type: 'success'
         })

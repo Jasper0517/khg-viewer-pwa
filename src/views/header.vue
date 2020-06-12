@@ -1,23 +1,24 @@
 <template>
   <header>
     <h1>KHG</h1>
-    <SwitchLanguage />
+    <SwitchLanguage v-if="!isSetting" />
     <template v-if="!isLoginPage">
       <el-link
         class="logout"
         type="danger"
         @click="logout"
       >
-        {{ $t('home.logout') }}
+        {{ $t('header.logout') }}
       </el-link>
       <router-link class="setting" to="/setting">
-        設定
+        {{ $t('header.setting') }}
       </router-link>
       <el-link type="success" @click="refresh">
-        {{ $t('home.Refresh') }}
+        {{ $t('header.Refresh') }}
         <i class="el-icon-refresh" />
       </el-link>
     </template>
+    <i v-if="isSettingOrSignupPage" class="el-icon-arrow-left logout" @click="back" />
   </header>
 </template>
 
@@ -31,7 +32,13 @@ export default {
   components: { SwitchLanguage },
   computed: {
     isLoginPage() {
-      return this.$route.path === '/login' || this.$route.path === '/signup'
+      return this.$route.path === '/login' || this.$route.path === '/signup' || this.$route.path === '/setting' || this.$route.path === '/forgetPassword'
+    },
+    isSettingOrSignupPage() {
+      return this.$route.path === '/setting' || this.$route.path === '/signup' || this.$route.path === '/forgetPassword'
+    },
+    isSetting() {
+      return this.$route.path === '/setting'
     }
   },
   methods: {
@@ -49,6 +56,9 @@ export default {
     },
     refresh() {
       this.$router.go(0)
+    },
+    back() {
+      this.$router.go(-1)
     }
   }
 }
@@ -73,4 +83,6 @@ export default {
     transform: translateY(-50%)
     font-size: 14px
     color: #4560d8
+  .el-icon-arrow-left
+    font-size: 20px
 </style>

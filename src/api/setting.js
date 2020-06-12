@@ -7,3 +7,11 @@ export function setting(data) {
     data
   })
 }
+
+export function changePassword(data) {
+  return request({
+    url: '/changePassword',
+    method: 'PATCH',
+    data
+  })
+}

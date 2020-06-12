@@ -8,7 +8,7 @@ import cookie from 'js-cookie'
 const service = axios.create({
   timeout: 60000, // request timeout
   withCredentials: true,
-  baseURL: process.env.VUE_APP_BASE_URL
+  baseURL: process.env.VUE_APP_BASE_URL || ''
 })
 
 /**
@@ -32,7 +32,9 @@ service.interceptors.request.use(
 service.interceptors.response.use(response => {
   const { data } = response
   if (data.code !== 200) {
+    console.log('in')
     Message.error({
+      showClose: true,
       message: data.msg
     })
   }
@@ -41,6 +43,7 @@ service.interceptors.response.use(response => {
 error => {
   const { data } = error.response
   Message.error({
+    showClose: true,
     message: data.msg
   })
   return Promise.reject(data.msg)

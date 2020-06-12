@@ -1,26 +1,17 @@
 <template>
-  <section class="login">
-    <el-card class="login-card">
-      <el-form ref="loginForm" :model="ruleForm" :rules="rules" label-position="top" label-width="150px">
+  <section class="forget-password">
+    <el-card class="forget-password-card">
+      <el-form ref="forgetPasswordForm" :model="ruleForm" :rules="rules" label-position="top" label-width="150px">
         <el-form-item required label="E-mail" prop="email">
           <el-input v-model="email" type="email" />
         </el-form-item>
-        <el-form-item required :label="$t('login.password')" prop="password">
-          <el-input v-model="password" show-password type="password" />
-        </el-form-item>
-        <el-form-item class="login-button" size="large">
+        <el-form-item class="forget-password-button" size="large">
           <VueRecaptcha ref="recaptcha" :sitekey="recaptchaKey" size="invisible" @verify="onVerify" />
-          <el-button type="primary" @click="login">
-            {{ $t('login.login') }}
+          <el-button type="primary" @click="forgetPassword">
+            {{ $t('forgetPassword.send') }}
           </el-button>
         </el-form-item>
       </el-form>
-      <router-link class="signup-button" to="/signup">
-        {{ $t('login.signup') }}
-      </router-link>
-      <router-link class="forget-password-button" to="/forgetPassword">
-        {{ $t('login.forgetPassword') }}
-      </router-link>
     </el-card>
   </section>
 </template>
@@ -31,7 +22,7 @@ import emailRegex from 'email-regex'
 import VueRecaptcha from 'vue-recaptcha'
 
 export default {
-  name: 'Login',
+  name: 'ForgetPassword',
   components: { VueRecaptcha },
   data() {
     const validEmailString = (rule, value, callback) => {
@@ -43,14 +34,10 @@ export default {
     }
     return {
       email: '',
-      password: '',
       rules: {
         email: [
           { required: true, message: this.$t('login.validatorMessage.email.required'), trigger: 'blur' },
           { validator: validEmailString, trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: this.$t('login.validatorMessage.password.required'), trigger: 'blur' }
         ]
       }
     }
@@ -63,26 +50,26 @@ export default {
     }),
     ruleForm() {
       return {
-        email: this.email,
-        password: this.password
+        email: this.email
       }
     }
   },
-  created() {
-  },
   methods: {
     ...mapActions('login', {
-      Login: 'Login',
+      ForgetPassword: 'ForgetPassword',
       VerifyRecaptcha: 'VerifyRecaptcha'
     }),
-    async login() {
-      this.$refs.loginForm.validate(async valid => {
+    ...mapActions('app', {
+      SetLoading: 'SetLoading'
+    }),
+    async forgetPassword() {
+      this.$refs.forgetPasswordForm.validate(async valid => {
         if (!valid) {
           console.error('error submit!!')
           return
         } else {
           if (this.isHuman) {
-            await this.loginApi()
+            await this.forgetPasswordApi()
           } else {
             this.$refs.recaptcha.execute()
           }
@@ -91,21 +78,23 @@ export default {
     },
     async onVerify(response) {
       await this.VerifyRecaptcha(response)
-      if (this.isHuman) await this.loginApi()
+      if (this.isHuman) await this.forgetPasswordApi()
     },
-    async loginApi() {
-      await this.Login({
-        email: this.email,
-        password: this.password
-      })
-      this.$message.success({
-        showClose: true,
-        message: this.$t('login.success')
-      })
-      if (!this.user.isSetting) {
-        this.$router.push('/setting')
-      } else {
-        this.$router.push('/')
+    async forgetPasswordApi() {
+      try {
+        this.SetLoading(true)
+        await this.ForgetPassword({
+          email: this.email
+        })
+        this.$message.success({
+          showClose: true,
+          message: this.$t('forgetPassword.success')
+        })
+        this.$router.push('/login')
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.SetLoading(false)
       }
     }
   }
@@ -113,12 +102,12 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-  .login
+  .forget-password
     display: flex
     justify-content: center
     align-items: center
     position: relative
-  .login-card
+  .forget-password-card
     padding: 15px
     width: 100%
     max-width: 400px
@@ -132,11 +121,6 @@ export default {
   .example
     text-align: left
     color: orange
-  .login-button
-    text-align: center
-  .signup-button
-    color: #4560d8
   .forget-password-button
-    color: #4560d8
-    float: right
+    text-align: center
 </style>

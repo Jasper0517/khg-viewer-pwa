@@ -15,12 +15,17 @@
           </el-button>
         </el-form-item>
       </el-form>
-      <router-link class="signup-button" to="/signup">
-        {{ $t('login.signup') }}
-      </router-link>
-      <router-link class="forget-password-button" to="/forgetPassword">
-        {{ $t('login.forgetPassword') }}
-      </router-link>
+      <div class="buttons">
+        <router-link class="button" to="/signup">
+          {{ $t('login.signup') }}
+        </router-link>
+        <router-link class="button" to="/help">
+          {{ $t('login.help') }}
+        </router-link>
+        <router-link class="button" to="/forgetPassword">
+          {{ $t('login.forgetPassword') }}
+        </router-link>
+      </div>
     </el-card>
   </section>
 </template>
@@ -134,9 +139,9 @@ export default {
     color: orange
   .login-button
     text-align: center
-  .signup-button
+  .buttons
+    display: flex
+    justify-content: space-around
+  .button
     color: #4560d8
-  .forget-password-button
-    color: #4560d8
-    float: right
 </style>

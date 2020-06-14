@@ -114,6 +114,7 @@ export default {
     signup: 'Sign Up',
     forgetPassword: 'Forget Password',
     success: 'Login Successful',
+    help: 'Help',
     validatorMessage: {
       email: {
         required: 'E-mail is required',

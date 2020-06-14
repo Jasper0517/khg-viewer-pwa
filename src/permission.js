@@ -1,9 +1,17 @@
 import router from './router'
 import store from './store'
 
+const whiteList = [
+  '/login',
+  '/signup',
+  '/forgetPassword',
+  '/help'
+]
+
 router.beforeEach(async(to, from, next) => {
   if (!store.state.login.isLogin) {
-    if (to.path === '/login' || to.path === '/signup' || to.path === '/forgetPassword') {
+    // white list
+    if (whiteList.includes(to.path)) {
       next()
       return
     }

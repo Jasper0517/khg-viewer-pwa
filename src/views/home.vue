@@ -33,7 +33,8 @@ export default {
         port: 0,
         rountineTime: 0,
         nextTime: 0
-      }
+      },
+      isGetData: false
     }
   },
   computed: {
@@ -43,7 +44,10 @@ export default {
     })
   },
   created() {
-    if (process.env.NODE_ENV === 'production') this.getApi()
+    if (!this.isGetData) {
+      if (process.env.NODE_ENV === 'production') this.getApi()
+      this.isGetData = true
+    }
   },
   methods: {
     ...mapActions('KHG', {

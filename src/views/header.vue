@@ -2,7 +2,7 @@
   <header>
     <h1>KHG</h1>
     <SwitchLanguage v-if="!isSetting" />
-    <template v-if="!isLoginPage">
+    <template v-if="isLoginPage">
       <el-link
         class="logout"
         type="danger"
@@ -18,7 +18,7 @@
         <i class="el-icon-refresh" />
       </el-link>
     </template>
-    <i v-if="isSettingOrSignupPage" class="el-icon-arrow-left logout" @click="back" />
+    <i v-if="isBackIcon" class="el-icon-arrow-left logout" @click="back" />
   </header>
 </template>
 
@@ -32,10 +32,16 @@ export default {
   components: { SwitchLanguage },
   computed: {
     isLoginPage() {
-      return this.$route.path === '/login' || this.$route.path === '/signup' || this.$route.path === '/setting' || this.$route.path === '/forgetPassword'
+      return this.$route.path === '/'
     },
-    isSettingOrSignupPage() {
-      return this.$route.path === '/setting' || this.$route.path === '/signup' || this.$route.path === '/forgetPassword'
+    isBackIcon() {
+      const list = [
+        '/setting',
+        '/signup',
+        '/forgetPassword',
+        '/help'
+      ]
+      return list.includes(this.$route.path)
     },
     isSetting() {
       return this.$route.path === '/setting'

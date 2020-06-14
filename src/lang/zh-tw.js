@@ -114,6 +114,7 @@ export default {
     signup: '註冊',
     forgetPassword: '忘記密碼',
     success: '登入成功',
+    help: '幫助',
     validatorMessage: {
       email: {
         required: '請輸入E-mail',

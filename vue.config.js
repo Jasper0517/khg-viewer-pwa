@@ -20,7 +20,13 @@ module.exports = {
   pwa: {
     Default: '#FFFFFF',
     msTileColor: '#FFFFFF',
-    backgroundColor: '#FFFFFF',
-    themeColor: '#FFFFFF'
+    themeColor: '#FFFFFF',
+    name: 'KHG Viewer',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black-translucent',
+    manifestOptions: {
+      background_color: '#FFFFFF',
+      start_url: '/?source=pwa'
+    }
   }
 }

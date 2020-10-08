@@ -23,8 +23,8 @@
 <script>
 
 import { mapActions, mapState } from 'vuex'
-import qs from 'qs'
-import cheerio from 'cheerio'
+// import qs from 'qs'
+// import cheerio from 'cheerio'
 
 export default {
   name: 'FunctionButtons',
@@ -43,24 +43,24 @@ export default {
     ...mapActions('KHG', {
       NormalApiControl: 'NormalApiControl'
     }),
-    async controlEngMode() {
-      const engData = qs.stringify({ 'ACT_NAME': 'ENG Mode ON' })
-      await this.NormalApiControl(engData).then(() => {
-        this.$message({
-          showClose: true,
-          message: this.$t('home.functionButtons.tips.getdKH.success'),
-          type: 'success'
-        })
-      }).catch(() => {
-        this.$message.error(this.$t('home.functionButtons.tips.getdKH.error'))
-      }).finally(() => {
-        this.dialogVisible = false
-      })
-      const $ = cheerio.load(this.tempData)
-      const body = $('body')
-      const inputs = body.eq(0).find('input[value=\'ENG Mode ON\']')
-      console.log(inputs.attr('style'))
-    },
+    // async controlEngMode() {
+    //   const engData = qs.stringify({ 'ACT_NAME': 'ENG Mode ON' })
+    //   await this.NormalApiControl(engData).then(() => {
+    //     this.$message({
+    //       showClose: true,
+    //       message: this.$t('home.functionButtons.tips.getdKH.success'),
+    //       type: 'success'
+    //     })
+    //   }).catch(() => {
+    //     this.$message.error(this.$t('home.functionButtons.tips.getdKH.error'))
+    //   }).finally(() => {
+    //     this.dialogVisible = false
+    //   })
+    //   const $ = cheerio.load(this.tempData)
+    //   const body = $('body')
+    //   const inputs = body.eq(0).find('input[value=\'ENG Mode ON\']')
+    //   console.log(inputs.attr('style'))
+    // },
     getKH() {
       const data = {
         url: this.user.url,

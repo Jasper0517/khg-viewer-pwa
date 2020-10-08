@@ -7,32 +7,32 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('../views/home.vue')
+    component: () => import(/* webpackChunkName: "Home" */ '../views/home.vue')
   },
   {
     path: '/setting',
     name: 'Setting',
-    component: () => import('../views/setting.vue')
+    component: () => import(/* webpackChunkName: "Setting" */ '../views/setting.vue')
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/login.vue')
+    component: () => import(/* webpackChunkName: "Login" */'../views/login.vue')
   },
   {
     path: '/signup',
     name: 'Signup',
-    component: () => import('../views/signup.vue')
+    component: () => import(/* webpackChunkName: "Signup" */ '../views/signup.vue')
   },
   {
     path: '/forgetPassword',
     name: 'ForgetPassword',
-    component: () => import('../views/forgetPassword.vue')
+    component: () => import(/* webpackChunkName: "ForgetPassword" */ '../views/forgetPassword.vue')
   },
   {
     path: '/help',
     name: 'Help',
-    component: () => import('../views/help.vue')
+    component: () => import(/* webpackChunkName: "Help" */ '../views/help.vue')
   }
   // {
   //   path: '/about',

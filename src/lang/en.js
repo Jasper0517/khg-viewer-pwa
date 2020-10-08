@@ -50,7 +50,7 @@ export default {
     },
     functionButtons: {
       title: 'Function Buttons',
-      openFunctionButtons: 'Funtion Buttons',
+      openFunctionButtons: 'Function Buttons',
       buttons: {
         getdKH: 'Get dKH'
       },
@@ -75,7 +75,7 @@ export default {
     example: 'EX:',
     telegramNotification: 'Telegram Notification',
     language: 'Language',
-    changePassword: 'Cahnge Password',
+    changePassword: 'Change Password',
     success: {
       set: 'Setting Successful',
       change: 'Change Password Successful'

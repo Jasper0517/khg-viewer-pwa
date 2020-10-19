@@ -1,9 +1,5 @@
 <template>
-  <section
-    v-loading.fullscreen.lock="isLoading"
-    class="home"
-    :element-loading-text="$t('loading')"
-  >
+  <section class="home">
     <SystemInfo :formated-data="formatedEDAC" />
     <FunctionButtons />
     <Chart />
@@ -18,9 +14,6 @@ import SystemInfo from '@/components/SystemInfo'
 import FunctionButtons from '@/components/FunctionButtons'
 
 import { mapActions, mapState } from 'vuex'
-import Cookies from 'js-cookie'
-import moment from 'moment'
-import qs from 'qs'
 
 export default {
   name: 'Home',
@@ -40,111 +33,50 @@ export default {
         port: 0,
         rountineTime: 0,
         nextTime: 0
-      }
+      },
+      isGetData: false
     }
   },
   computed: {
     ...mapState({
-      record: state => state.record,
-      isLoading: state => state.isLoading,
-      setting: state => state.setting
+      user: state => state.login.user,
+      isLoading: state => state.KHG.isLoading
     })
   },
   created() {
-    const password = Cookies.get('password')
-    const EDAP = Cookies.get('EDAP')
-    const url = Cookies.get('url')
-
-    this.SetPassword(password)
-    this.SetUrl(url)
-    this.SetEDAP(EDAP)
-
-    if (!this.setting.password || !this.setting.url) {
-      this.$router.push('/setting')
-      return
+    if (!this.isGetData) {
+      if (process.env.NODE_ENV === 'production') this.getApi()
+      this.isGetData = true
     }
-
-    this.SetLoading(true)
-
-    const loginData = qs.stringify({ password: this.setting.password, button: 'Login' })
-    this.Login(loginData).then(async() => {
-      await new Promise(resolve => { setTimeout(() => resolve(), 4000) })
-      const EDACData = qs.stringify({ EAPK: this.setting.EDAP })
-      await this.GetEDAC(EDACData)
-      this.EDACPaser()
-      await new Promise(resolve => { setTimeout(() => resolve(), 4000) })
-      await this.GetKHRecord()
-      this.logParser()
-      this.SetLoading(false)
-    }).catch(
-      error => {
-        this.SetLoading(false)
-        throw error
-      }
-    )
   },
   methods: {
-    ...mapActions({
-      Login: 'Login',
-      GetEDAC: 'EDAC',
+    ...mapActions('KHG', {
+      KHGLogin: 'KHGLogin',
+      EDAC: 'EDAC',
       GetKHRecord: 'GetKHRecord',
-      SetKHLog: 'SetKHLog',
-      SetLoading: 'SetLoading',
-      SetPassword: 'SetPassword',
-      SetUrl: 'SetUrl',
-      SetEDAP: 'SetEDAP'
+      SetLoading: 'SetLoading'
     }),
-    logParser() {
-      // 上個月第一天
-      const starts = moment().startOf('month').subtract('month', 1)
-      // 這個月+上個月總天數
-      const totalDays = moment(moment().month() - 1).daysInMonth() + moment().daysInMonth()
-      // filter以上條件外的資料
-      const copyOriginLog = JSON.parse(JSON.stringify(this.record.originLog))
-      const filterOriginLog = []
-      for (let i = 0; i < copyOriginLog.length; i++) {
-        // 每筆log date
-        const date = moment(moment().format('YYYY/') + copyOriginLog[i].item.replace(/\r\n|\n/g, '').substring(1, 6))
-        // 相差上個月幾天
-        const diffDate = date.diff(starts, 'days')
-        // 如果找完上個月份的就終止
-        if (totalDays < diffDate) break
-        filterOriginLog.push(copyOriginLog[i])
+    ...mapActions('app', {
+      SetLoading: 'SetLoading'
+    }),
+    async getApi() {
+      this.SetLoading(true)
+      const {
+        url,
+        KHGPassword,
+        EDAPKey
+      } = this.user
+      try {
+        await this.KHGLogin({ url, password: KHGPassword })
+        await new Promise(resolve => { setTimeout(() => resolve(), 2000) })
+        await this.EDAC({ url, EAPK: EDAPKey })
+        await new Promise(resolve => { setTimeout(() => resolve(), 2000) })
+        await this.GetKHRecord({ url })
+      } catch (error) {
+        console.error(error)
+      } finally {
+        this.SetLoading(false)
       }
-      const originData = filterOriginLog.length > 800 ? filterOriginLog.splice(0, 800) : filterOriginLog
-      const formatedData = originData.map(({ item }) => {
-        const havePH = item.indexOf('pH:') >= 0
-        const newData = item.replace(' AK. ', ' ').replace(' AK.', ' ').split(' ')
-        const obj = {}
-        obj.date = newData[0].replace(/\r\n|\n/g, '').trim()
-        obj.time = newData[1]
-        if (newData[2].indexOf('W') === 0) {
-          obj.KH = +newData[havePH ? 9 : 6].replace(':', '')
-          obj.isKHRecord = true
-          obj.distance = +newData[2].replace('W.', '')
-          obj.AK = +newData[4]
-          obj.error = newData[3]
-        } else {
-          const message = newData.splice(2).join(' ')
-          if (message.indexOf('ERR') >= 0) {
-            obj.isError = true
-          }
-          obj.isKHRecord = false
-          obj.message = message
-        }
-        return obj
-      })
-      this.SetKHLog(formatedData)
-    },
-    EDACPaser() {
-      if (!this.record.EDAC) return
-      const data = this.record.EDAC.replace(/</g, '').replace(/>/g, ',').replace(/\n/g, '').split(',')
-      this.formatedEDAC.rountineTime = +data[1].trim()
-      this.formatedEDAC.resetTime = +data[14].trim()
-      this.formatedEDAC.port = +data[12].trim()
-      this.formatedEDAC.lastKH = +data[5].trim()
-      this.formatedEDAC.lastTestingTime = data[15].trim()
-      this.formatedEDAC.nextTime = +data[14].trim()
     }
   }
 }

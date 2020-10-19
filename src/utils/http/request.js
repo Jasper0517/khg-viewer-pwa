@@ -1,10 +1,14 @@
 import axios from 'axios'
+import { Message } from 'element-ui'
+import cookie from 'js-cookie'
 
 /**
  * create an axios instance
  */
 const service = axios.create({
-  timeout: 60000 // request timeout
+  timeout: 60000, // request timeout
+  withCredentials: true,
+  baseURL: process.env.VUE_APP_BASE_URL || ''
 })
 
 /**
@@ -12,7 +16,8 @@ const service = axios.create({
  */
 service.interceptors.request.use(
   config => {
-    config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+    config.headers['Content-Type'] = 'application/json'
+    config.headers.common.language = cookie.get('language')
     return config
   },
   error => {
@@ -24,6 +29,24 @@ service.interceptors.request.use(
 /**
  * response interceptor
  */
-service.interceptors.response.use(response => response.data)
+service.interceptors.response.use(response => {
+  const { data } = response
+  if (data.code !== 200) {
+    console.log('in')
+    Message.error({
+      showClose: true,
+      message: data.msg
+    })
+  }
+  return data
+},
+error => {
+  const { data } = error.response
+  Message.error({
+    showClose: true,
+    message: data.msg
+  })
+  return Promise.reject(data.msg)
+})
 
 export default service

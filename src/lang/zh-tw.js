@@ -1,10 +1,12 @@
 export default {
   loading: '資料讀取中',
   header: {
-    version: '版本：'
+    version: '版本：',
+    setting: '設定',
+    logout: '登出系統',
+    Refresh: '重新整理'
   },
   home: {
-    logout: '登出系統',
     chart: {
       today: '今日',
       yesterday: '昨日',
@@ -63,22 +65,86 @@ export default {
   },
   setting: {
     url: '對外網址：',
-    password: '密碼：',
-    login: '登入',
+    oldPassword: '密碼：',
+    KHGPassword: 'KHG 密碼：',
+    newPassword: '新密碼：',
+    confirmNewPassword: '確認新密碼：',
+    send: '儲存',
     example: '如：',
+    telegramNotification: 'Telegram 通知',
+    language: '語言',
+    changePassword: '更換密碼',
+    confirm: '確認',
+    cancel: '取消',
+    success: {
+      set: '設定成功',
+      change: '變更密碼成功'
+    },
     warning: {
       url: 'KHG對外網址，無法使用家裡內網IP',
-      password: 'KHG登入密碼，預設是Admin',
-      EDAP: '需要開啟工程模式看系統設定，不輸入也可以'
+      password: 'KHG登入密碼，預設是: Admin',
+      EDAP: '需要開啟Eng mode式查看System Setup裡的E.D.A.P Key, 預設是: Dr. Bridge'
     },
     validatorMessage: {
       url: {
         format: '請依照網址格式輸入',
         required: '請輸入網址'
       },
+      KHGPassword: {
+        required: '請輸入KHG密碼'
+      },
+      oldPassword: {
+        required: '請輸入密碼'
+      },
+      newPassword: {
+        required: '請輸入密碼'
+      },
+      confirmNewPassword: {
+        required: '請輸入密碼',
+        confirm: '兩次密碼不一致'
+      }
+    },
+    dialog: {
+      title: '變更密碼'
+    }
+  },
+  login: {
+    password: '密碼',
+    login: '登入',
+    signup: '註冊',
+    forgetPassword: '忘記密碼',
+    success: '登入成功',
+    help: '幫助',
+    validatorMessage: {
+      email: {
+        required: '請輸入E-mail',
+        format: 'E-mail格式錯誤'
+      },
       password: {
         required: '請輸入密碼'
       }
     }
+  },
+  signup: {
+    password: '密碼',
+    confirmPassword: '重複密碼',
+    signup: '註冊',
+    validatorMessage: {
+      email: {
+        required: '請輸入E-mail',
+        format: 'E-mail格式錯誤'
+      },
+      password: {
+        required: '請輸入密碼'
+      },
+      confirmPassword: {
+        required: '請再次輸入密碼',
+        notEqual: '兩次密碼不相同'
+      }
+    }
+  },
+  forgetPassword: {
+    send: '寄送信箱',
+    success: '寄送成功，請使用新密碼登入'
   }
 }

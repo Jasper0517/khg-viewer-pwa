@@ -2,28 +2,26 @@
   <section class="language">
     <el-radio-group v-model="language" size="mini">
       <el-radio-button label="中文" />
-      <el-radio-button label="En" />
+      <el-radio-button label="EN" />
     </el-radio-group>
   </section>
 </template>
 
 <script>
 
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import cookies from 'js-cookie'
 
 export default {
   name: 'SwitchLanguage',
-  data() {
-    return {
-
-    }
-  },
   computed: {
+    ...mapState({
+      currentLang: state => state.app.language
+    }),
     language: {
       get() {
-        if (!this.$store.state.language) return '中文'
-        return this.$store.state.language === 'zh-tw' ? '中文' : 'En'
+        if (!this.currentLang) return '中文'
+        return this.currentLang === 'zh-tw' ? '中文' : 'EN'
       },
       set(val) {
         const lang = val === '中文' ? 'zh-tw' : 'en'
@@ -33,10 +31,10 @@ export default {
     }
   },
   created() {
-    this.SetLanguage(cookies.get('language'))
+    this.SetLanguage(cookies.get('language') || 'zh-tw')
   },
   methods: {
-    ...mapActions({
+    ...mapActions('app', {
       SetLanguage: 'SetLanguage'
     })
   }

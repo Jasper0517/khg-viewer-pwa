@@ -1,5 +1,6 @@
 <template>
   <section class="system-info">
+    <span class="version">{{ `${$t('header.version')}${version}` }}</span>
     <el-card class="system-info-card">
       <div slot="header" class="clearfix">
         <span>{{ $t('home.systemInfo.title') }}</span>
@@ -25,18 +26,19 @@
 
 <script>
 import moment from 'moment'
+import { mapState } from 'vuex'
 
 export default {
   name: 'SystemInfo',
-  props: {
-    formatedData: {
-      type: Object,
-      default: () => {}
-    }
-  },
   computed: {
+    ...mapState({
+      formatedData: state => state.KHG.record.EDAC
+    }),
     resetTime() {
       return moment().add(this.formatedData.nextTime, 'minutes').format('MM/DD HH:mm:ss')
+    },
+    version() {
+      return require('../../../package.json').version
     }
   }
 }

@@ -1,10 +1,12 @@
 export default {
   loading: 'Loading',
   header: {
-    version: 'Version:'
+    version: 'Version:',
+    setting: 'Setting',
+    logout: 'Logout',
+    Refresh: 'Refresh'
   },
   home: {
-    logout: 'Logout',
     chart: {
       today: 'Today',
       yesterday: 'Yesterday',
@@ -63,22 +65,86 @@ export default {
   },
   setting: {
     url: 'Url:',
-    password: 'Password:',
-    login: 'Login',
+    oldPassword: 'Password:',
+    newPassword: 'New Password:',
+    confirmNewPassword: 'Confirm New Password:',
+    KHGPassword: 'KHG Password:',
+    send: 'Save',
+    confirm: 'Confirm',
+    cancel: 'Cancel',
     example: 'EX:',
+    telegramNotification: 'Telegram Notification',
+    language: 'Language',
+    changePassword: 'Cahnge Password',
+    success: {
+      set: 'Setting Successful',
+      change: 'Change Password Successful'
+    },
     warning: {
       url: 'KHG External IP， Can\'t Use Private IP Address.',
-      password: 'KHG Login Password, Default Is "Admin".',
-      EDAP: 'You Need Open Engine Mode To Check Your Key, It IS Optional.'
+      password: 'KHG Password, Default Is "Admin".',
+      EDAP: 'You Need Open Engine Mode To Check Your "E.D.A.P Key", Default Is "Dr. Bridge".'
     },
     validatorMessage: {
       url: {
         format: 'Please Follow The Right Format',
         required: 'Url Is Required'
       },
-      password: {
+      KHGPassword: {
+        required: 'KHG Password Is Require'
+      },
+      oldPassword: {
         required: 'Password Is Required'
+      },
+      newPassword: {
+        required: 'Password Is Required'
+      },
+      confirmNewPassword: {
+        required: 'Password Is Required',
+        confirm: 'Those passwords didn\'t match'
+      }
+    },
+    dialog: {
+      title: 'Change Password'
+    }
+  },
+  login: {
+    password: 'Password',
+    login: 'Login',
+    signup: 'Sign Up',
+    forgetPassword: 'Forget Password',
+    success: 'Login Successful',
+    help: 'Help',
+    validatorMessage: {
+      email: {
+        required: 'E-mail is required',
+        format: 'E-mail format is error'
+      },
+      password: {
+        required: 'Password is required'
       }
     }
+  },
+  signup: {
+    password: 'Password',
+    confirmPassword: 'Confirmed Password',
+    signup: 'Sign Up',
+    validatorMessage: {
+      email: {
+        required: 'E-mail is required',
+        format: 'E-mail format is error'
+      },
+      password: {
+        required: 'Password is required'
+      },
+      confirmPassword: {
+        required: 'Confirm Password is required',
+        notEqual: 'Those passwords didn\'t match'
+      }
+    }
+  },
+  forgetPassword: {
+    send: 'Send E-mail',
+    success: 'Send Email Successful, please login with the new password'
   }
 }

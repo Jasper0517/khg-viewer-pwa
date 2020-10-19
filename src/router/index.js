@@ -13,6 +13,26 @@ const routes = [
     path: '/setting',
     name: 'Setting',
     component: () => import('../views/setting.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/login.vue')
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: () => import('../views/signup.vue')
+  },
+  {
+    path: '/forgetPassword',
+    name: 'ForgetPassword',
+    component: () => import('../views/forgetPassword.vue')
+  },
+  {
+    path: '/help',
+    name: 'Help',
+    component: () => import('../views/help.vue')
   }
   // {
   //   path: '/about',

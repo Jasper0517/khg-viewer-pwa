@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
 import cookie from 'js-cookie'
 
 /**
@@ -32,8 +31,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(response => {
   const { data } = response
   if (data.code !== 200) {
-    console.log('in')
-    Message.error({
+    this.$message.error({
       showClose: true,
       message: data.msg
     })
@@ -42,7 +40,7 @@ service.interceptors.response.use(response => {
 },
 error => {
   const { data } = error.response
-  Message.error({
+  this.$message.error({
     showClose: true,
     message: data.msg
   })

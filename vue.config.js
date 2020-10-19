@@ -1,3 +1,6 @@
+const CompressionPlugin = require('compression-webpack-plugin')
+// const PreloadWebpackPlugin = require('preload-webpack-plugin')
+
 module.exports = {
   publicPath: './',
   pages: {
@@ -27,6 +30,28 @@ module.exports = {
     manifestOptions: {
       background_color: '#FFFFFF',
       start_url: '/?source=pwa'
+    }
+  },
+  chainWebpack: config => {
+    if (process.env.NODE_ENV === 'production') {
+      config.plugin('CompressionPlugin').use(new CompressionPlugin({
+        algorithm: 'gzip',
+        test: /\.(js|css)$/, // 匹配文件名
+        threshold: 10240, // 对超过10k的数据压缩
+        deleteOriginalAssets: false, // 不删除源文件
+        minRatio: 0.8 // 压缩比
+      }))
+
+      // config.plugin('PreloadWebpackPlugin').use(
+      //   new PreloadWebpackPlugin({
+      //     rel: 'preload',
+      //     as(entry) {
+      //       if (/\.css$/.test(entry)) return 'style'
+      //       if (/\.woff$/.test(entry)) return 'font'
+      //       if (/\.png$/.test(entry)) return 'image'
+      //       return 'script'
+      //     }
+      //   }))
     }
   }
 }

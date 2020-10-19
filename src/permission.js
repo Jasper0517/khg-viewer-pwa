@@ -15,6 +15,8 @@ router.beforeEach(async(to, from, next) => {
       next()
       return
     }
+
+    // try to login
     try {
       await store.dispatch('login/Login')
       if (!store.state.login.user.isSetting) {

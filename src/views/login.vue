@@ -1,7 +1,7 @@
 <template>
   <section class="login">
     <el-card class="login-card">
-      <el-form ref="loginForm" :model="ruleForm" :rules="rules" label-position="top" label-width="150px">
+      <el-form ref="loginForm" :model="ruleForm" :rules="rules" label-position="top" label-width="150px" @keyup.enter.native="login">
         <el-form-item required label="E-mail" prop="email">
           <el-input v-model="email" type="email" />
         </el-form-item>
@@ -72,8 +72,6 @@ export default {
         password: this.password
       }
     }
-  },
-  created() {
   },
   methods: {
     ...mapActions('login', {

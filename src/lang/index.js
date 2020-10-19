@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import elementEnLocale from 'element-ui/lib/locale/lang/en' // element-ui lang
-import elementZhTWLocale from 'element-ui/lib/locale/lang/zh-TW'// element-ui lang
 import enLocale from './en'
 import zhTWLocale from './zh-tw'
 import cookies from 'js-cookie'
@@ -10,12 +8,10 @@ Vue.use(VueI18n)
 
 const messages = {
   'en': {
-    ...enLocale,
-    ...elementEnLocale
+    ...enLocale
   },
   'zh-tw': {
-    ...zhTWLocale,
-    ...elementZhTWLocale
+    ...zhTWLocale
   }
 }
 

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { mapState } from 'vuex'
 
 export default {
@@ -35,7 +35,7 @@ export default {
       formatedData: state => state.KHG.record.EDAC
     }),
     resetTime() {
-      return moment().add(this.formatedData.nextTime, 'minutes').format('MM/DD HH:mm:ss')
+      return dayjs().add(this.formatedData.nextTime, 'minutes').format('MM/DD HH:mm:ss')
     },
     version() {
       return require('../../../package.json').version

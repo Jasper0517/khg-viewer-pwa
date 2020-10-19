@@ -26,7 +26,7 @@
 import VeLine from 'v-charts/lib/line.common'
 
 import { mapState } from 'vuex'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export default {
   name: 'Chart',
@@ -59,30 +59,30 @@ export default {
       return this.KHLog.filter(log => log.isKHRecord)
     },
     todayKHLog() {
-      return this.KHData.filter(item => item.date === moment().format('MM/DD'))
+      return this.KHData.filter(item => item.date === dayjs().format('MM/DD'))
     },
     yesterdayKHLog() {
-      return this.KHData.filter(item => item.date === moment().subtract(1, 'day').format('MM/DD'))
+      return this.KHData.filter(item => item.date === dayjs().subtract(1, 'day').format('MM/DD'))
     },
     weekKHLog() {
       const weekDate = []
       for (let i = 0; i < 7; i++) {
-        weekDate.push(moment().day(i).format('MM/DD'))
+        weekDate.push(dayjs().day(i).format('MM/DD'))
       }
       return this.KHData.filter(item => weekDate.indexOf(item.date) > -1)
     },
     lastWeekKHLog() {
       const weekDate = []
       for (let i = -1; i > -8; i--) {
-        weekDate.push(moment().day(i).format('MM/DD'))
+        weekDate.push(dayjs().day(i).format('MM/DD'))
       }
       return this.KHData.filter(item => weekDate.indexOf(item.date) > -1)
     },
     monthKHLog() {
-      return this.KHData.filter(item => item.date.indexOf(moment().format('MM/')) > -1)
+      return this.KHData.filter(item => item.date.indexOf(dayjs().format('MM/')) > -1)
     },
     lastMonthKHLog() {
-      return this.KHData.filter(item => item.date.indexOf(moment().subtract(1, 'months').format('MM/')) > -1)
+      return this.KHData.filter(item => item.date.indexOf(dayjs().subtract(1, 'months').format('MM/')) > -1)
     },
     currentLog() {
       return [...this[`${this.type}KHLog`]].reverse()

@@ -1,6 +1,6 @@
 <template>
   <section class="home">
-    <SystemInfo :formated-data="formatedEDAC" />
+    <SystemInfo />
     <FunctionButtons />
     <Chart />
     <Log />
@@ -26,7 +26,7 @@ export default {
 
   data() {
     return {
-      formatedEDAC: {
+      formateEDAC: {
         lastKH: 0,
         lastTestingTime: 0,
         resetTime: 0,

@@ -22,7 +22,7 @@
 
 <script>
 
-import domtoimage from 'dom-to-image'
+import domToImage from 'dom-to-image'
 
 export default {
   name: 'OriginData',
@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     generatorImage() {
-      domtoimage.toPng(this.$refs.originTable.$el, { quality: 0.95 })
+      domToImage.toPng(this.$refs.originTable.$el, { quality: 0.95 })
         .then((dataUrl) => {
           var link = document.createElement('a')
           link.href = dataUrl

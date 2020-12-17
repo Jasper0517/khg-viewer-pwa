@@ -5,19 +5,19 @@
       <div slot="header" class="clearfix">
         <span>{{ $t('home.systemInfo.title') }}</span>
       </div>
-      <h4 v-if="formatedData.lastKH === 0 && formatedData.lastTestingTime === 0">{{ $t('home.systemInfo.errorMessage') }}</h4>
+      <h4 v-if="formateData.lastKH === 0 && formateData.lastTestingTime === 0">{{ $t('home.systemInfo.errorMessage') }}</h4>
       <el-form v-else label-position="left" label-width="130px">
         <el-form-item :label="$t('home.systemInfo.lastKH')">
-          <span class="text">{{ formatedData.lastKH }}</span>
+          <span class="text">{{ formateData.lastKH }}</span>
         </el-form-item>
         <el-form-item :label="$t('home.systemInfo.lastTestingTime')">
-          <span class="text">{{ formatedData.lastTestingTime }}</span>
+          <span class="text">{{ formateData.lastTestingTime }}</span>
         </el-form-item>
         <el-form-item :label="$t('home.systemInfo.nextTestingTime')">
           <span class="text">{{ resetTime }}</span>
         </el-form-item>
         <el-form-item :label="$t('home.systemInfo.intervalTime')">
-          <span class="text">{{ formatedData.rountineTime }} {{ $t('home.systemInfo.minutes') }}</span>
+          <span class="text">{{ formateData.rountineTime }} {{ $t('home.systemInfo.minutes') }}</span>
         </el-form-item>
       </el-form>
     </el-card>
@@ -32,10 +32,10 @@ export default {
   name: 'SystemInfo',
   computed: {
     ...mapState({
-      formatedData: state => state.KHG.record.EDAC
+      formateData: state => state.KHG.record.EDAC
     }),
     resetTime() {
-      return dayjs().add(this.formatedData.nextTime, 'minutes').format('MM/DD HH:mm:ss')
+      return dayjs().add(this.formateData.nextTime, 'minutes').format('MM/DD HH:mm:ss')
     },
     version() {
       return require('../../../package.json').version

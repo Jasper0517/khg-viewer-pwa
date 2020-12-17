@@ -83,7 +83,7 @@ export default {
     warning: {
       url: 'KHG External IP， Can\'t Use Private IP Address.',
       password: 'KHG Password, Default Is "Admin".',
-      EDAP: 'You Need Open Engine Mode To Check Your "E.D.A.P Key", Default Is "Dr. Bridge".'
+      EDAP: 'You Need Open Engine Mode To Check Your "E.D.A.P Key", Default value Is "Dr. Bridge".'
     },
     validatorMessage: {
       url: {
@@ -102,6 +102,9 @@ export default {
       confirmNewPassword: {
         required: 'Password Is Required',
         confirm: 'Those passwords didn\'t match'
+      },
+      EDAPKey: {
+        required: 'EDAPKey Is Required'
       }
     },
     dialog: {

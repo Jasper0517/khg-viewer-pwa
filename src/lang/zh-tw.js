@@ -102,6 +102,9 @@ export default {
       confirmNewPassword: {
         required: '請輸入密碼',
         confirm: '兩次密碼不一致'
+      },
+      EDAPKey: {
+        required: '請輸入EDAPKey'
       }
     },
     dialog: {

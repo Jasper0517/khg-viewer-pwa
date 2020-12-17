@@ -33,6 +33,9 @@ module.exports = {
     }
   },
   chainWebpack: config => {
+    config.plugins.delete('prefetch')
+    config.plugins.delete('preload')
+
     if (process.env.NODE_ENV === 'production') {
       config.plugin('CompressionPlugin').use(new CompressionPlugin({
         algorithm: 'gzip',
@@ -41,17 +44,6 @@ module.exports = {
         deleteOriginalAssets: false, // 不删除源文件
         minRatio: 0.8 // 压缩比
       }))
-
-      // config.plugin('PreloadWebpackPlugin').use(
-      //   new PreloadWebpackPlugin({
-      //     rel: 'preload',
-      //     as(entry) {
-      //       if (/\.css$/.test(entry)) return 'style'
-      //       if (/\.woff$/.test(entry)) return 'font'
-      //       if (/\.png$/.test(entry)) return 'image'
-      //       return 'script'
-      //     }
-      //   }))
     }
   }
 }
